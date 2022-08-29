@@ -1,0 +1,29 @@
+mqtt:
+  client:
+    protocol: 4      # MQTTv311
+  connection:
+    host: 172.19.73.190
+    port: 1883
+    keepalive: 60
+  private_path: device/001
+#serializer: json:dumps
+#deserializer: json:loads
+  account:
+    username: "rbag"
+    password: "rbag"
+bridge:
+# MQTT -> ROS
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: cmd_to_robot
+    topic_to: /cmd_to_robot
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: cmd_to_dongle
+    topic_to: /cmd_to_dongle
+# ROS -> MQTT
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /return_to_rpf
+    topic_to: return_to_rpf
+

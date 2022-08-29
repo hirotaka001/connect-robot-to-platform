@@ -1,0 +1,10 @@
+<launch>
+  <node name="conv_mqtt2ros" pkg="dongle_bridge" type="conv_mqtt2ros.py" output="screen">
+    <rosparam command="delete" param=""/>
+    <rosparam command="load" file="$(find dongle_bridge)/config/config.yaml"/>
+  </node>
+  <node name="mqtt_bridge_manager" pkg="dongle_bridge" type="mqtt_bridge_manager.py" output="screen">
+    <rosparam command="delete" param=""/>
+    <rosparam command="load" file="$(find dongle_bridge)/config/config.yaml"/>
+  </node>
+</launch>

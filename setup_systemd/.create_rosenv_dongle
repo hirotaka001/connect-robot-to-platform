@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Get HWADDR
+HW_ADDR=`dmesg | grep usb | grep HOST | cut -d' ' -f9`
+
+# Get Robot HOST Name
+HOST_NAME=`arp -i usb0 | grep ${HW_ADDR} | cut -d' ' -f1`
+
+# Get IP Addr
+ROBOT_IPADDR=localhost
+for ((i=0;i<10;i++));do
+        TMP_IPADDR=`ping jetbot.local -s1 -c1 -W1 | grep PING | cut -d' ' -f3 | tr -d "(" | tr -d ")"`
+        if [ "`echo ${TMP_IPADDR} | grep "169.254."`" ]; then
+                ROBOT_IPADDR=${TMP_IPADDR}
+                break
+        fi
+done
+
+# Set env "MASTER_IP"
+
+echo export MASTER_IP=${ROBOT_IPADDR} > /home/pi/.set_ros_dongle
+
+echo export ROS_MASTER_URI=http://${ROBOT_IPADDR}:11311 >> /home/pi/.set_ros_dongle
+echo export ROS_HOSTNAME=169.254.100.100 >> /home/pi/.set_ros_dongle
+
+echo source /opt/ros/melodic/setup.bash >> /home/pi/.set_ros_dongle
+echo source /home/pi/ros_catkin_ws/devel_isolated/setup.bash >> /home/pi/.set_ros_dongle

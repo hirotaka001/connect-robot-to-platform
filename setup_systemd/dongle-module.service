@@ -1,0 +1,16 @@
+[Unit]
+Description = dongle module
+After=networking.service
+Requires=networking.service
+ConditionPathExists=/opt/dongle-module/bin
+
+[Service]
+ExecStartPre=/opt/dongle-module/bin/rostopic_list.sh
+ExecStart=/opt/dongle-module/bin/launch_ros_node.sh
+Type=simple
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+

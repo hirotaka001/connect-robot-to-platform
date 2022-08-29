@@ -1,0 +1,30 @@
+topics:
+  cmd_sub: "/cmd_to_robot"
+  tb3_cmd_pub: "/cmd_vel"
+  tb3_odom_sub: "/odom"
+  jb_str_pub: "/jetbot_motors/cmd_str"
+  jb_raw_pub: "/jetbot_motors/cmd_raw"
+  cmd_to_robot: "/cmd_to_robot"
+  cmd_to_dongle: "/cmd_to_dongle"
+  return_to_rpf: "/return_to_rpf"
+robot:
+  rate_hz: 10
+  circle:
+    velocities:
+      x: 0.1
+      z: 0.4
+    thresholds:
+      dist_meter: 0.1
+      angular_rad: 0.02
+  polygon:
+    velocities:
+      x: 0.2
+      z: 0.2
+    edge:
+      length_meter: 0.4
+    thresholds:
+      dist_meter: 0.01
+      angular_rad: 0.02
+  unit:
+    length_meter: 0.1
+    theta_rad: 0.17453292519
